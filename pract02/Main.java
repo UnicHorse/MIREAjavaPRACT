@@ -1,5 +1,5 @@
 import org.w3c.dom.ls.LSOutput;
-
+import java.util.Objects;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,7 +10,13 @@ public class Main {
         //TestAuthor.startAuthor();
         //TestBall.startBall();
         //TestPointAndCircle.startPointAndCircle();
-        TestShop.testShop();
+        //TestShop.startShop();
+        //PitomnikDog.start();
+        //TestCircle.startCircle();
+        //TestBook.startBook();
+        //arrayMoveItems.main();
+        //Poker.main();
+        //HowMany.main();
     }
 
     static class Author {
@@ -234,7 +240,7 @@ public class Main {
     }
 
     static class TestShop{
-        public static void testShop() {
+        public static void startShop() {
             Shop shop = new Shop();
             shop.addComputer("apple", 1000);
             shop.addComputer("win7", 1000);
@@ -243,5 +249,259 @@ public class Main {
         }
     }
 
-    
+    static class Dog {
+        private String name;
+        private int age;
+
+        Dog(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return this.age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public int dogAgeToHuman() {
+            return age * 7;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Dog{name: %s, age: %d}", name, age);
+        }
+    }
+
+    static class PitomnikDog {
+        private static ArrayList<Dog> dogs = new ArrayList<>(16);
+
+        public static void start() {
+            addDogs();
+        }
+
+        public static void addDogs() {
+            for (int i = 0; i < 16; i++) {
+                //System.out.println("Enter dog's param:");
+                dogs.add(new Dog("dogg", (int) ((Math.random() * 100) + 1)));
+                //System.out.println("Dogs added successfully");
+            }
+            for (Dog d : dogs) {
+                System.out.println(d.dogAgeToHuman());
+            }
+        }
+    }
+
+    static class ModelCircle {
+        private int xCenter, yCenter = 0;
+        private float radius;
+
+        ModelCircle(float radius) {
+            this.radius = radius;
+        }
+
+        ModelCircle(int xCenter, int yCenter, float radius) {
+            this.xCenter = xCenter;
+            this.yCenter = yCenter;
+            this.radius = radius;
+        }
+
+        public int getXCenter() {
+            return this.xCenter;
+        }
+
+        public void setXCenter(int xCenter) {
+            this.xCenter = xCenter;
+        }
+
+        public int getYCenter() {
+            return this.yCenter;
+        }
+
+        public void setYCenter(int yCenter) {
+            this.yCenter = yCenter;
+        }
+
+        public float getRadius() {
+            return this.radius;
+        }
+
+        public void setRadius(float radius) {
+            this.radius = radius;
+        }
+
+        public float calcCircleArea() {
+            return (float) (Math.PI * Math.pow(this.radius, 2));
+        }
+
+        public float calcCircleLength() {
+            return (float) (2 * Math.PI * this.radius);
+        }
+
+    }
+
+    static class TestCircle {
+        public static void startCircle() {
+            ModelCircle mc = new ModelCircle(12, 23, 56);
+            mc.setXCenter(mc.getXCenter() + 5);
+            mc.setYCenter(mc.getYCenter() + 6);
+            mc.setRadius(mc.getRadius() - 4);
+            System.out.printf("X: %d, Y: %d\nArea: %f, Length: %f", mc.getXCenter(), mc.getYCenter(), mc.calcCircleArea(), mc.calcCircleLength());
+        }
+    }
+
+    /**
+     * Task 7
+     */
+    static class Book {
+        private String author, title, publishYear;
+
+        Book(String author, String title, String publishYear) {
+            this.author = author;
+            this.title = title;
+            this.publishYear = publishYear;
+        }
+
+        public String getAuthor() {
+            return this.author;
+        }
+
+        public void setAuthor(String author) {
+            this.author = author;
+        }
+
+        public String getTitle() {
+            return this.title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getPublishYear() {
+            return this.publishYear;
+        }
+
+        public void setPublishYear(String publishYear) {
+            this.publishYear = publishYear;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Book{author: %s,title: %s,god: %s}", author, title, publishYear);
+        }
+    }
+
+    static class Bookshelf {
+        ArrayList<Book> books = new ArrayList<>(16);
+
+        public void addBook(String author, String title, String publishYear) {
+            books.add(new Book(author, title, publishYear));
+        }
+
+        public void sort() {
+            books.sort((b1, b2) -> b1.getPublishYear().compareTo(b2.getPublishYear()));
+        }
+
+        public void printBooks() {
+            for (Book b : books) {
+                System.out.println(b);
+            }
+        }
+
+        public void earlyBooks() {
+            this.sort();
+            for (Book b : books) {
+                if (Objects.equals(books.get(0).publishYear, b.publishYear)) System.out.println(b);
+            }
+        }
+
+        public void lastBooks() {
+            this.sort();
+            for (Book b : books) {
+                if (Objects.equals(books.get(books.size() - 1).publishYear, b.publishYear)) System.out.println(b);
+            }
+        }
+    }
+
+    static class TestBook {
+        public static void startBook() {
+            Bookshelf bs = new Bookshelf();
+            for (int i = 0; i < 15; i++) {
+                bs.addBook("sda", "sad" + (i + 1), String.valueOf((int) ((Math.random() * 40) + 1980)));
+            }
+            bs.printBooks();
+            bs.sort();
+            System.out.println("---------------------------------------");
+            bs.earlyBooks();
+            System.out.println("---------------------------------------");
+            bs.lastBooks();
+            System.out.println("---------------------------------------");
+            bs.printBooks();
+
+        }
+    }
+
+    static class arrayMoveItems {
+        public static void main() {
+            String buff;
+            String[] arr = new String[11];
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = "item" + (i + 1);
+            }
+            for (String s : arr) {
+                System.out.println(s);
+            }
+            System.out.println("-");
+            for (int i = 0; i < (int) (arr.length / 2); i++) {
+                buff = arr[i];
+                arr[i] = arr[arr.length - 1 - i];
+                arr[arr.length - 1 - i] = buff;
+            }
+            for (String s : arr) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    static class Poker {
+        public static void main() {
+            String[] suits = new String[]{"diamond ", "club ", "heart ", "spade "};
+            String[] ranks = new String[]{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+            ArrayList<String> cards = new ArrayList<>(52);
+            int n = 5;
+            for (String suit : suits) {
+                for (String rank : ranks) {
+                    cards.add(suit + rank);
+                }
+            }
+            int index;
+            for (int i = 0; i < n; i++) {
+                System.out.printf("Player %d:\n", i+1);
+                for (int j = 0; j < 5; j++) {
+                    index = (int) (Math.random() * (cards.size() - 1));
+                    System.out.println(cards.get(index));
+                    cards.remove(index);
+                }
+            }
+        }
+    }
+
+    static class HowMany{
+        public static void main() {
+            String s = sc.nextLine();
+            System.out.println(s.split(" ").length);
+        }
+    }
 }
